@@ -1,0 +1,99 @@
+#armaan chetal 2110994755
+# Import the GPIO and time libraries
+from tkinter import* #tkinter library imported with other libraries
+#import tkinter . font
+from gpiozero import LED
+import RPi.GPIO
+RPi.GPIO.setmode(RPi.GPIO.BCM)
+import time
+
+win=Tk()
+myLed=LED(4)
+
+
+MORSECODE = {' ': ' ',
+        "'": '.----.',
+        '(': '-.--.-',
+        ')': '-.--.-',
+        ',': '--..--',
+        '-': '-....-',
+        '.': '.-.-.-',
+        '/': '-..-.',
+        '0': '-----',
+        '1': '.----',
+        '2': '..---',
+        '3': '...--',
+        '4': '....-',
+        '5': '.....',
+        '6': '-....',
+        '7': '--...',
+        '8': '---..',
+        '9': '----.',
+        ':': '---...',
+        ';': '-.-.-.',
+        '?': '..--..',
+        'A': '.-',
+        'B': '-...',
+        'C': '-.-.',
+        'D': '-..',
+        'E': '.',
+        'F': '..-.',
+        'G': '--.',
+        'H': '....',
+        'I': '..',
+        'J': '.---',
+        'K': '-.-',
+        'L': '.-..',
+        'M': '--',
+        'N': '-.',
+        'O': '---',
+        'P': '.--.',
+        'Q': '--.-',
+        'R': '.-.',
+        'S': '...',
+        'T': '-',
+        'U': '..-',
+        'V': '...-',
+        'W': '.--',
+        'X': '-..-',
+        'Y': '-.--',
+        'Z': '--..',
+        '_': '..--.-'}
+
+
+def dot():  #dot and dash have sperate time of led being on which makes dot and dash in the led while blinking
+    myLed.on()
+    time.sleep(0.2) #delay of 0.2 seconds and 0.8 seconds for dot and dash respectevily 
+    myLed.off()
+    time.sleep(0.2)
+    
+def dash():
+    myLed.on()
+    time.sleep(0.8)
+    myLed.off()
+    time.sleep(0.2)
+
+def myInput():
+    #input=text_box.get("1.0","end-lc") # "1.0" and "end-lc" define the starting and ending point of the string  user input that will be read in the text widget
+    while True:
+        input=text_box.get("1.0","end")
+        for letter in input:
+            for symbol in MORSECODE[letter.upper()]:
+                if symbol == '-':
+                    dash()
+                elif symbol == '.':
+                    dot()
+                else:
+                    time.sleep(0.5)
+            time.sleep(0.5)
+
+    
+text_box=Text(win,height=4,width=10,bg="white") #text widget with heigh width and background
+text_box.grid(row=1,column=1,padx=12,pady=6) #padx, pady are for how many pixels to pad widget, horizontally and vertically and adds padding around x and y axis
+
+#comand option invokes the funciton call back when the button is clicked 
+enter=Button(win,text="enter the word",command=myInput,bg='blue',height=4,width=10) #enter button with text and command having the method and bg,width and height
+enter.grid(row=2,column=1,padx=12,pady=6)
+
+
+#except KeyboardInterrupt
