@@ -1,17 +1,17 @@
 #armaan chetal 2110994755
 # Import the GPIO and time libraries
 from tkinter import* #tkinter library imported with other libraries
-#import tkinter . font
+#import tkinter . font   #importing libraries that will be used 
 from gpiozero import LED
 import RPi.GPIO
 RPi.GPIO.setmode(RPi.GPIO.BCM)
 import time
 
-win=Tk()
-myLed=LED(4)
+win=Tk() #creating gui window by calling the tkinter inbuilt method
+myLed=LED(4) #the gpio pin of the led is 4
 
 
-MORSECODE = {' ': ' ',
+MORSECODE = {' ': ' ',  #morse code is by using the python dictionary with each symbol, letter and number having the corrosponding morse code
         "'": '.----.',
         '(': '-.--.-',
         ')': '-.--.-',
@@ -73,13 +73,13 @@ def dash():
     myLed.off()
     time.sleep(0.2)
 
-def myInput():
+def myInput(): #the method takes the user input and then runs the outer and inner for loop 
     #input=text_box.get("1.0","end-lc") # "1.0" and "end-lc" define the starting and ending point of the string  user input that will be read in the text widget
     while True:
         input=text_box.get("1.0","end")
-        for letter in input:
-            for symbol in MORSECODE[letter.upper()]:
-                if symbol == '-':
+        for letter in input: #the outer for loop acceses the letter from the user input
+            for symbol in MORSECODE[letter.upper()]: #the symbol is acceses from the morse code dictionary 
+                if symbol == '-':   #dot and dash method is called in accordance to the symbol which is assigned to the letter
                     dash()
                 elif symbol == '.':
                     dot()
@@ -87,7 +87,7 @@ def myInput():
                     time.sleep(0.5)
             time.sleep(0.5)
 
-    
+#text widget and button is created so that the user can enter the text and then enter the button to blink the led 
 text_box=Text(win,height=4,width=10,bg="white") #text widget with heigh width and background
 text_box.grid(row=1,column=1,padx=12,pady=6) #padx, pady are for how many pixels to pad widget, horizontally and vertically and adds padding around x and y axis
 
